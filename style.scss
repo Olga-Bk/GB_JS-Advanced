@@ -8,9 +8,15 @@
     margin: 0 auto;
 }
 
+.title-wrap{
+    display: flex;
+    align-items: center;
+}
+
 .header {
     background-color: rgb(85, 88, 88);
     margin-bottom: 40px;
+    display: flex;
 }
 
 .header-wrap {
@@ -20,6 +26,19 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+}
+
+.search {
+    padding: 10px;
+}
+
+.search-button {
+    padding: 10px 30px;
+    font-size: 20px;
+    background-color: rgb(124, 103, 108);
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
 .cart-button{
@@ -48,3 +67,7 @@
     justify-content: space-between;
     cursor: pointer;
 }
+
+.goods-search {
+    height: 36px
+} 
