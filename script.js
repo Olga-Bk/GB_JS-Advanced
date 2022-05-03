@@ -1,23 +1,48 @@
-const goods = [
-    { title: 'Shirt', price: 150 },
-    { title: 'Socks', price: 50 },
-    { title: 'Jacket', price: 350 },
-    { title: 'Shoes', price: 250 },
-  ];
-  
-  const renderGoodsItem = ({title = '', price = 'Нет в наличии'}) => {
-    return `
-      <div class="goods-item">
-        <h3>${title}</h3>
-        <p>${price}</p>
-      </div>
-    `;
-  };
-  
-  
-  const renderGoodsList = (list) => {
-    let goodsList = list.map(item => renderGoodsItem(item)).join('');
-    document.querySelector('.goods-list').innerHTML = goodsList;
-  }
-  
-  renderGoodsList(goods);
+const BASE_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/';
+const GET_GOODS_ITEMS = `${BASE_URL}catalogData.json`
+const GET_BASKET_GOODS_ITEMS = `${BASE_URL}getBasket.json`
+
+function service(url) {
+  return fetch(url)
+    .then((res) => res.json())
+}
+
+function init() {
+  const app = new Vue({
+    el: '#root',
+    data: {
+      items: [],
+      filteredItems: [],
+      search: '',
+      isBasketVisible: false,
+    },
+    methods: {
+      fetchGoods() {
+        service(GET_GOODS_ITEMS).then((data) => {
+          this.items = data;
+          this.filteredItems = data;
+        });
+      },
+      filterItems() {
+        this.filteredItems = this.items.filter(({
+          product_name
+        }) => {
+          return product_name.match(new RegExp(this.search, 'gui'))
+        })
+      },
+    },
+    computed: {
+      calculatePrice() {
+        return this.filteredItems.reduce((prev, {
+          price
+        }) => {
+          return prev + price;
+        }, 0)
+      }
+    },
+    mounted() {
+      this.fetchGoods();
+    }
+  })
+}
+window.onload = init
