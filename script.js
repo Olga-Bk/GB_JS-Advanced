@@ -8,6 +8,42 @@ function service(url) {
 }
 
 function init() {
+
+  const CustomButton = Vue.component('custom-button', {
+    template: `
+      <button class="search-button" type="button" v-on:click="$emit('click')">
+         <slot></slot>
+      </button>
+    `
+  })
+  const basketGoods = Vue.component('basket-goods', {
+    data() {
+      return {
+         basketGoodsItems: []
+      }
+    },
+    template: `
+      <div v-if="isBasketVisible" class="basket">
+                    <div class="basket-item" v-for="item in filteredItems">
+                        <h3>{{ item.product_name }}</h3>
+                        <p>{{ item.price }}</p>
+                    </div>
+                </div>
+    `
+  })
+
+  const goodsItem = Vue.component('goods-item', {
+    props: [
+       'item'
+    ],
+    template: `
+      <div class="goods-item">
+         <h3>{{ item.product_name }}</h3>
+         <p>{{ item.price }}</p>
+      </div>
+    `
+  })
+
   const app = new Vue({
     el: '#root',
     data: {
@@ -17,6 +53,10 @@ function init() {
       isBasketVisible: false,
     },
     methods: {
+
+      setVisionCard() {
+        this.cardIsVision = !this.cardIsVision
+      },
       fetchGoods() {
         service(GET_GOODS_ITEMS).then((data) => {
           this.items = data;
