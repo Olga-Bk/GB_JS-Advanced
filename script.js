@@ -4,6 +4,7 @@
 
 const BASE_URL = 'http://localhost:8000/';
 const GET_GOODS_ITEMS = `${BASE_URL}goods`
+const GET_BASKET_GOODS_ITEMS = `${BASE_URL}basketgoods`
 
 function service(url) {
   return fetch(url)
@@ -22,7 +23,7 @@ function init() {
   const basketGoods = Vue.component('basket-goods', {
     data() {
       return {
-         basketGoodsItems: []
+        basketGoodsItems: []
       }
     },
     template: `
@@ -32,12 +33,17 @@ function init() {
                         <p>{{ item.price }}</p>
                     </div>
                 </div>
-    `
+    `,
+    mounted() {
+      service(GET_BASKET_GOODS_ITEMS).then((basketGoods) => {
+        this.basketGoodsItems = basketGoods
+      })
+    }
   })
 
   const goodsItem = Vue.component('goods-item', {
     props: [
-       'item'
+      'item'
     ],
     template: `
       <div class="goods-item">
