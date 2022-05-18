@@ -1,6 +1,9 @@
-const BASE_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/';
-const GET_GOODS_ITEMS = `${BASE_URL}catalogData.json`
-const GET_BASKET_GOODS_ITEMS = `${BASE_URL}getBasket.json`
+// const BASE_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/';
+// const GET_GOODS_ITEMS = `${BASE_URL}catalogData.json`
+// const GET_BASKET_GOODS_ITEMS = `${BASE_URL}getBasket.json`
+
+const BASE_URL = 'http://localhost:8000/';
+const GET_GOODS_ITEMS = `${BASE_URL}goods`
 
 function service(url) {
   return fetch(url)
