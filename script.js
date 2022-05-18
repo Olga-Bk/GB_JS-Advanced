@@ -9,7 +9,7 @@ function service(url) {
 
 function init() {
 
-  const CustomButton = Vue.component('custom-button', {
+  const CustomButton = Vue.component('button', {
     template: `
       <button class="search-button" type="button" v-on:click="$emit('click')">
          <slot></slot>
