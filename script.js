@@ -39,12 +39,29 @@ function init() {
       }
     },
     template: `
-      <div v-if="isBasketVisible" class="basket">
-                    <div class="basket-item" v-for="item in filteredItems">
-                        <h3>{{ item.product_name }}</h3>
-                        <p>{{ item.price }}</p>
-                    </div>
-                </div>
+
+    <div class="fixed-area">
+         <div class="basket-card">
+            <div class="basket-card__header">
+               <h1 class="basket-card__header__title">basket card</h1>
+               <div class="basket-card__header__delete-icon"
+                  v-on:click="$emit('closeclick')"
+               ></div>
+            </div>
+            <div class="basket-card__content">
+               <basket-item v-for="item in basketGoodsItems" :item="item"></basket-item>
+
+            </div>
+         </div>
+      </div>
+
+
+      // <div v-if="isBasketVisible" class="basket">
+      //               <div class="basket-item" v-for="item in filteredItems">
+      //                   <h3>{{ item.product_name }}</h3>
+      //                   <p>{{ item.price }}</p>
+      //               </div>
+      //           </div>
     `,
     mounted() {
       service(GET_BASKET_GOODS_ITEMS).then((basketGoods) => {
