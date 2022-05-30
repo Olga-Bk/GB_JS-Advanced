@@ -11,6 +11,22 @@ function service(url) {
     .then((res) => res.json())
 }
 
+function servicePost(url, body) {
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      "Content-type": "application/json"
+    },
+    body: JSON.stringify(body)
+  })
+}
+
+function serviceDelete(url, id) {
+  return fetch(`${url}/${id}`, {
+    method: 'DELETE',
+  })
+}
+
 function init() {
 
   const Search = Vue.component('search', {
@@ -78,6 +94,7 @@ function init() {
       <div class="goods-item">
          <h3>{{ item.product_name }}</h3>
          <p>{{ item.price }}</p>
+         <custom-button @click="$emit("addgood", item.id)>Добавить</custom-button>
       </div>
     `
   })
@@ -100,10 +117,23 @@ function init() {
           this.filteredItems = data;
         });
       },
+
+      addGood(goodId) {
+        servicePost(GET_BASKET_GOODS_ITEMS, {
+          id: goodId,
+        })
+      },
+
+      deleteGood (goodId){
+        serviceDelete(GET_BASKET_GOODS_ITEMS, {
+          id: goodId,
+        })
+      },
+
       
-      seachChangeHandler(value){
-        this.seach = value;
-      }
+      // seachChangeHandler(value){
+      //   this.seach = value;
+      // }
 
     },
     computed: {

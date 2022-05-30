@@ -44,10 +44,14 @@
 
         <main>
             <div class="goods-list">
-                <div class="goods-item" v-for="item in filteredItems">
-                    <h3>{{ item.product_name }}</h3>
-                    <p>{{ item.price }}</p>
-                </div>
+
+                <goods-item
+                 v-for="item in filteredItems"
+                v-bind:item-"item"
+                @addgood="addGood">
+                    <!-- <h3>{{ item.product_name }}</h3>
+                    <p>{{ item.price }}</p> -->
+                </goods-item>
                 <div class="goods-list-empty" v-if="filteredItems.length === 0">
                     <h2>Нет данных</h2>
                 </div>
