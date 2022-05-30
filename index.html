@@ -24,6 +24,13 @@
                     <input type="text" class="goods-search" v-model="search" />
                     <button class="search-button" type="button" v-on:click="filterItems">Искать</button>
                 </div>
+                <search
+                    :value="search"
+                    @input="searchChangeHandler"
+                 
+                ></search>
+                
+
                 <!-- <button class="cart-button" type="button">Корзина</button> -->
                 <button class="cart-button" type="button" v-on:click="isBasketVisible = !isBasketVisible">Корзина</button>
                 <div v-if="isBasketVisible" class="basket">

@@ -13,6 +13,18 @@ function service(url) {
 
 function init() {
 
+  const Search = Vue.component('search', {
+    props: [
+      'value'
+    ],
+    template: `
+    <div class="search">
+    <input type="text" class="goods-search" :value="value" @input="$emit('input',$event.target.value)/>
+    // <button class="search-button" type="button" v-on:click="$emit('searchclick')">Искать</button>
+</div>
+    `
+  })
+
   const CustomButton = Vue.component('button', {
     template: `
       <button class="search-button" type="button" v-on:click="$emit('click')">
@@ -57,7 +69,6 @@ function init() {
     el: '#root',
     data: {
       items: [],
-      filteredItems: [],
       search: '',
       isBasketVisible: false,
     },
@@ -72,13 +83,11 @@ function init() {
           this.filteredItems = data;
         });
       },
-      filterItems() {
-        this.filteredItems = this.items.filter(({
-          product_name
-        }) => {
-          return product_name.match(new RegExp(this.search, 'gui'))
-        })
-      },
+      
+      seachChangeHandler(value){
+        this.seach = value;
+      }
+
     },
     computed: {
       calculatePrice() {
@@ -89,6 +98,12 @@ function init() {
         }, 0)
       }
     },
+    filteredItems() {
+      return this.filteredItems = this.items.filter(({ product_name }) => {
+        return product_name.match(new RegExp(this.search, 'gui'))
+      })
+    },
+    
     mounted() {
       this.fetchGoods();
     }
